@@ -1,4 +1,4 @@
-import { parse, DocumentNode, TypeDefinitionNode, ObjectTypeDefinitionNode, FieldDefinitionNode, NamedTypeNode, ListTypeNode, NonNullTypeNode } from 'graphql';
+import { parse, DocumentNode, ObjectTypeDefinitionNode } from 'graphql';
 import { Entity, GraphQLField, Relationship } from '../types/schema';
 
 export function parseGraphQLSchema(schemaContent: string): Entity[] {

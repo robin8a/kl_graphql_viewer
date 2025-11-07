@@ -10,6 +10,14 @@
       "StackName": "amplify-klgraphqlviewer-dev-281a5",
       "StackId": "arn:aws:cloudformation:us-east-1:009908684781:stack/amplify-klgraphqlviewer-dev-281a5/a8a07f20-bc0e-11f0-9f5d-0e0bf294f4d9",
       "AmplifyAppId": "darmzu4qrbmoe"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "darmzu4qrbmoe",
+          "type": "cicd"
+        }
+      }
     }
   }
 }

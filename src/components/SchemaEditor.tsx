@@ -9,7 +9,7 @@ interface SchemaEditorProps {
 }
 
 export function SchemaEditor({ value, onChange, onError }: SchemaEditorProps) {
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleEditorChange = (newValue: string | undefined) => {
     if (newValue === undefined) return;

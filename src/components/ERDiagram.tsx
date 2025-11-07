@@ -42,7 +42,7 @@ export const ERDiagram = forwardRef<ERDiagramRef, ERDiagramProps>(({ diagram }, 
       const toY = toTable.y + 30;
 
       // Draw line
-      const line = connections
+      connections
         .append('line')
         .attr('x1', fromX)
         .attr('y1', fromY)

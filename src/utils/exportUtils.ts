@@ -24,8 +24,7 @@ export function exportSVG(svgElement: SVGSVGElement, filename: string = 'erd-dia
   // Clone the SVG to avoid modifying the original
   const clonedSvg = svgElement.cloneNode(true) as SVGSVGElement;
   
-  // Get computed styles and inline them
-  const styles = window.getComputedStyle(svgElement);
+  // Add inline styles for proper rendering
   const styleElement = document.createElementNS('http://www.w3.org/2000/svg', 'style');
   styleElement.textContent = `
     .table rect { fill: #fff; stroke: #333; stroke-width: 2; }
