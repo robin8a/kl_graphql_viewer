@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-klgraphqlviewer-dev-281a5-authRole",
+      "UnauthRoleArn": "arn:aws:iam::009908684781:role/amplify-klgraphqlviewer-dev-281a5-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::009908684781:role/amplify-klgraphqlviewer-dev-281a5-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-klgraphqlviewer-dev-281a5-deployment",
+      "UnauthRoleName": "amplify-klgraphqlviewer-dev-281a5-unauthRole",
+      "StackName": "amplify-klgraphqlviewer-dev-281a5",
+      "StackId": "arn:aws:cloudformation:us-east-1:009908684781:stack/amplify-klgraphqlviewer-dev-281a5/a8a07f20-bc0e-11f0-9f5d-0e0bf294f4d9",
+      "AmplifyAppId": "darmzu4qrbmoe"
+    }
+  }
+}
