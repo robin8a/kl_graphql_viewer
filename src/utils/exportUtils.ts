@@ -24,6 +24,13 @@ export function exportSVG(svgElement: SVGSVGElement, filename: string = 'erd-dia
   // Clone the SVG to avoid modifying the original
   const clonedSvg = svgElement.cloneNode(true) as SVGSVGElement;
   
+  // Ensure viewBox is set for proper scaling
+  if (!clonedSvg.getAttribute('viewBox')) {
+    const width = clonedSvg.getAttribute('width') || '1200';
+    const height = clonedSvg.getAttribute('height') || '800';
+    clonedSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  }
+  
   // Add inline styles for proper rendering
   const styleElement = document.createElementNS('http://www.w3.org/2000/svg', 'style');
   styleElement.textContent = `
@@ -59,9 +66,26 @@ export function exportPNG(svgElement: SVGSVGElement, filename: string = 'erd-dia
       // Clone the SVG
       const clonedSvg = svgElement.cloneNode(true) as SVGSVGElement;
       
-      // Get SVG dimensions
-      const width = parseInt(svgElement.getAttribute('width') || '1200', 10);
-      const height = parseInt(svgElement.getAttribute('height') || '800', 10);
+      // Get viewBox if available, otherwise use width/height
+      const viewBox = clonedSvg.getAttribute('viewBox');
+      let width: number, height: number;
+      
+      if (viewBox) {
+        const [, , w, h] = viewBox.split(' ').map(parseFloat);
+        width = w;
+        height = h;
+        // Ensure width and height attributes are set for proper rendering
+        clonedSvg.setAttribute('width', width.toString());
+        clonedSvg.setAttribute('height', height.toString());
+      } else {
+        width = parseInt(clonedSvg.getAttribute('width') || '1200', 10);
+        height = parseInt(clonedSvg.getAttribute('height') || '800', 10);
+      }
+
+      // Ensure namespace is present
+      if (!clonedSvg.getAttribute('xmlns')) {
+        clonedSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      }
 
       // Serialize SVG to string
       const serializer = new XMLSerializer();
@@ -78,7 +102,7 @@ export function exportPNG(svgElement: SVGSVGElement, filename: string = 'erd-dia
       
       const img = new Image();
       img.onload = () => {
-        // Create canvas
+        // Create canvas with the calculated dimensions
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
@@ -94,7 +118,7 @@ export function exportPNG(svgElement: SVGSVGElement, filename: string = 'erd-dia
         ctx.fillRect(0, 0, width, height);
         
         // Draw image on canvas
-        ctx.drawImage(img, 0, 0);
+        ctx.drawImage(img, 0, 0, width, height);
         
         // Convert canvas to blob and download
         canvas.toBlob((blob) => {

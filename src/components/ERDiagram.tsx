@@ -23,9 +23,39 @@ export const ERDiagram = forwardRef<ERDiagramRef, ERDiagramProps>(({ diagram }, 
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove();
 
-    const width = 1200;
-    const height = 800;
-    svg.attr('width', width).attr('height', height);
+    // Calculate bounding box of all tables
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    const tableWidth = 300;
+    
+    diagram.tables.forEach((table) => {
+      const headerHeight = 30;
+      const rowHeight = 25;
+      const tableHeight = headerHeight + (table.fields.length * rowHeight) + 10;
+      
+      minX = Math.min(minX, table.x);
+      minY = Math.min(minY, table.y);
+      maxX = Math.max(maxX, table.x + tableWidth);
+      maxY = Math.max(maxY, table.y + tableHeight);
+    });
+
+    // Add padding around the content
+    const padding = 50;
+    minX -= padding;
+    minY -= padding;
+    maxX += padding;
+    maxY += padding;
+
+    // Calculate dimensions
+    const contentWidth = maxX - minX;
+    const contentHeight = maxY - minY;
+    const width = Math.max(1200, contentWidth);
+    const height = Math.max(800, contentHeight);
+
+    // Set SVG dimensions and viewBox to include all content
+    // viewBox format: "minX minY width height"
+    svg.attr('width', width)
+       .attr('height', height)
+       .attr('viewBox', `${minX} ${minY} ${contentWidth} ${contentHeight}`);
 
     // Draw connections first (so they appear behind tables)
     const connections = svg.append('g').attr('class', 'connections');
